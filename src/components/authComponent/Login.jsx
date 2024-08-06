@@ -8,7 +8,7 @@ const Login = () => {
   const [searchParams] = useSearchParams();
   const role = searchParams.get("role");
   console.log("checking");
-  const onLoginSubmit = async (data) => {
+  const onSubmit = async (data) => {
     try {
       console.log("starting");
       const loginReq = await API.post(`/login/${role}`, data);
@@ -26,7 +26,7 @@ const Login = () => {
   };
   return (
     <>
-      <Form onLoginSubmit={onLoginSubmit} auth={"login"} role={role} />
+      <Form onSubmit={onSubmit} auth={"login"} role={role} />
     </>
   );
 };

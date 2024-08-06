@@ -11,7 +11,7 @@ export const SendOtp = () => {
     OTP: "",
   });
   const handleChange = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     const { name, value } = e.target;
     setData({ ...data, [name]: value });
   };
