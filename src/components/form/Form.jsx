@@ -1,9 +1,62 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import ThriftLogo from "./ThriftLogo.png";
 
-export const Form = ({ role, auth }) => {
+export const Form = ({ role, auth, onSubmit }) => {
+  const checkError = useRef();
+  const [img, setImg] = useState([]);
+  const [error, setError] = useState("");
+  const [phoneError, setPhoneError] = useState("");
+  const [pwError, setPwError] = useState("");
+
+  const [formDatas, setFormDatas] = useState({
+    userName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    phoneNumber: "",
+    citizenship: "",
+  });
+
+  const handleChange = (e) => {
+    e.preventDefault();
+    const { name, value, files } = e.target;
+    setImg(files);
+    setFormDatas({
+      ...formDatas,
+      [name]: name === "citizenship" ? files : value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (auth === "register" && role === "seller") {
+      const files = checkError.current.files;
+      if (files.length < 2) {
+        setError("Submit front and back photo of citizenship");
+        return;
+      }
+      setError("");
+    }
+
+    if (formDatas.password !== formDatas.confirmPassword) {
+      setPwError("password must match");
+      return;
+    }
+    setPwError("");
+
+    if (auth === "register") {
+      const phoneNumber = formDatas.phoneNumber.length;
+      if (phoneNumber !== 10) {
+        setPhoneError("please provide valid phone number");
+        return;
+      }
+      setPhoneError("");
+    }
+    onSubmit();
+  };
+
   return (
     <div className="">
       <div>
@@ -40,7 +93,7 @@ export const Form = ({ role, auth }) => {
                 {/* Sign In Form */}
                 <div className="flex flex-col overflow-hidden rounded-lg bg-[#f4f8f1] shadow-sm dark:bg-gray-800 dark:text-gray-100">
                   <div className="grow p-5 md:px-16 md:py-12">
-                    <form className="space-y-6">
+                    <form onSubmit={handleSubmit} className="space-y-6">
                       {auth === "register" ? (
                         <div className="space-y-1">
                           <label
@@ -55,7 +108,8 @@ export const Form = ({ role, auth }) => {
                             name="userName"
                             placeholder="Enter your username"
                             required
-                            className="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 placeholder-gray-500 focus:border-blue-500 focus:ring focus:ring-blue-500/50 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-500"
+                            onChange={handleChange}
+                            className="block w-full rounded-lg border bg-white border-gray-200 px-5 py-3 leading-6 placeholder-gray-500 "
                           />
                         </div>
                       ) : null}
@@ -69,7 +123,8 @@ export const Form = ({ role, auth }) => {
                           name="email"
                           placeholder="Enter your email"
                           required
-                          className="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 placeholder-gray-500 focus:border-blue-500 focus:ring focus:ring-blue-500/50 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-500"
+                          onChange={handleChange}
+                          className="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 placeholder-gray-500 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400"
                         />
                       </div>
                       <div className="space-y-1">
@@ -84,8 +139,10 @@ export const Form = ({ role, auth }) => {
                           id="password"
                           name="password"
                           placeholder="Enter your password"
+                          minLength="8"
                           required
-                          className="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 placeholder-gray-500 focus:border-blue-500 focus:ring focus:ring-blue-500/50 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-500"
+                          onChange={handleChange}
+                          className="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 placeholder-gray-500   dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 "
                         />
                       </div>
                       {auth === "register" ? (
@@ -102,8 +159,12 @@ export const Form = ({ role, auth }) => {
                             name="confirmPassword"
                             placeholder="Re-type your password"
                             required
-                            className="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 placeholder-gray-500 focus:border-blue-500 focus:ring focus:ring-blue-500/50 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-500"
+                            onChange={handleChange}
+                            className="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 placeholder-gray-500   dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 "
                           />
+                          {pwError && (
+                            <p className="text-red-600">{pwError} </p>
+                          )}
                         </div>
                       ) : null}
                       <div>
@@ -116,13 +177,17 @@ export const Form = ({ role, auth }) => {
                               Phone Number
                             </label>
                             <input
-                              type="number"
+                              type="text"
                               id="phoneNumber"
                               name="phoneNumber"
                               placeholder="Enter your phonenumber"
-                              requiredj
+                              required
+                              onChange={handleChange}
                               className="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 placeholder-gray-500 focus:border-blue-500 focus:ring focus:ring-blue-500/50 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-500"
                             />
+                            {phoneError && (
+                              <p className="text-red-600"> {phoneError} </p>
+                            )}
                           </div>
                         ) : null}
                         {auth === "login" ? (
@@ -150,9 +215,12 @@ export const Form = ({ role, auth }) => {
                               name="citizenship"
                               multiple
                               required
+                              onChange={handleChange}
+                              ref={checkError}
                               accept="image/*"
                               className="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 placeholder-gray-500 focus:border-blue-500 focus:ring focus:ring-blue-500/50 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-500"
                             />
+                            {error && <p className="text-red-600"> {error} </p>}
                           </div>
                         ) : null}
                         <button

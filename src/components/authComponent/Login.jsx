@@ -5,9 +5,10 @@ import { useSearchParams } from "react-router-dom";
 const Login = () => {
   const [searchParams] = useSearchParams();
   const role = searchParams.get("role");
+  const onSubmit = (data) => {};
   return (
     <>
-      <Form auth={"login"} role={role} />
+      <Form onSubmit={onSubmit} auth={"login"} role={role} />
     </>
   );
 };

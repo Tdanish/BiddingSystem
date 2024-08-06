@@ -5,10 +5,11 @@ import { useSearchParams } from "react-router-dom";
 const Register = () => {
   const [searchParams] = useSearchParams();
   const role = searchParams.get("role");
+  const onSubmit = (data, email) => {};
 
   return (
     <>
-      <Form auth={"register"} role={role} />
+      <Form onSubmit={onSubmit} auth={"register"} role={role} />
     </>
   );
 };
