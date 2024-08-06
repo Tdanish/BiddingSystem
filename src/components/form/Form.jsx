@@ -3,7 +3,7 @@ import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import ThriftLogo from "./ThriftLogo.png";
 
-export const Form = ({ role, auth, onSubmit }) => {
+export const Form = ({ role, auth, onSubmit, onLoginSubmit }) => {
   const checkError = useRef();
   const [img, setImg] = useState([]);
   const [error, setError] = useState("");
@@ -54,7 +54,27 @@ export const Form = ({ role, auth, onSubmit }) => {
       }
       setPhoneError("");
     }
-    onSubmit();
+    const formData = new FormData();
+    if (auth === "register" && role === "seller") {
+      for (let i = 0; i < img.length; i++) {
+        formData.append("images", img[i]);
+      }
+    }
+    if (auth === "register") {
+      formData.append("userName", formDatas.userName);
+      formData.append("phoneNumber", formDatas.phoneNumber);
+      formData.append("confirmPassword", formDatas.confirmPassword);
+    }
+    formData.append("email", formDatas.email);
+    formData.append("password", formDatas.password);
+    if (auth === "register") {
+      onSubmit(formData, formDatas.email);
+      return;
+    }
+    if (auth === "login") {
+      onLoginSubmit(formData);
+      return;
+    }
   };
 
   return (
