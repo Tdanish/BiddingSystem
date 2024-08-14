@@ -91,7 +91,7 @@ export const Form = ({ role, auth, onSubmit }) => {
             className=" flex justify-between  bg-green-300 "
           >
             {/* image content */}
-            <div className="flex justify-center  w-[50%] items-center  min-h-dvh bg-[#e1f8d4]  ">
+            <div className="flex justify-center  w-[50%] items-center  min-h-dvh bg-[#bffcfb]  ">
               <div>
                 <img src={ThriftLogo} alt="" />
               </div>
@@ -103,16 +103,16 @@ export const Form = ({ role, auth, onSubmit }) => {
                 {/* Header */}
                 <header className="mb-10 text-center">
                   <h1 className="mb-2 inline-flex items-center gap-2 text-2xl font-bold">
-                    <span className="text-[#173e08]">Thrift Heaven</span>
+                    <span className="text-[#008080]">Thrift Heaven</span>
                   </h1>
-                  <h2 className="text-sm font-medium text-[#779c63] dark:text-gray-400">
+                  <h2 className="text-sm font-sm  text-gray-400">
                     Welcome, please sign in to your dashboard!!!
                   </h2>
                 </header>
                 {/* END Header */}
 
                 {/* Sign In Form */}
-                <div className="flex flex-col overflow-hidden rounded-lg bg-[#f4f8f1] shadow-sm dark:bg-gray-800 dark:text-gray-100">
+                <div className="flex flex-col overflow-hidden rounded-lg bg-white shadow-2xl  dark:text-gray-100">
                   <div className="grow p-5 md:px-16 md:py-12">
                     <form onSubmit={handleSubmit} className="space-y-6">
                       {auth === "register" ? (
@@ -190,10 +190,10 @@ export const Form = ({ role, auth, onSubmit }) => {
                       ) : null}
                       <div>
                         {auth === "register" ? (
-                          <div className="space-y-1">
+                          <div className="space-y-1 mb-6">
                             <label
                               htmlFor="phoneNumber"
-                              className="text-sm font-medium"
+                              className="text-sm font-medium "
                             >
                               Phone Number
                             </label>
@@ -204,7 +204,7 @@ export const Form = ({ role, auth, onSubmit }) => {
                               placeholder="Enter your phonenumber"
                               required
                               onChange={handleChange}
-                              className="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 placeholder-gray-500 focus:border-blue-500 focus:ring focus:ring-blue-500/50 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-500"
+                              className="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 placeholder-gray-500     dark:placeholder-gray-400 "
                             />
                             {phoneError && (
                               <p className="text-red-600"> {phoneError} </p>
@@ -215,7 +215,7 @@ export const Form = ({ role, auth, onSubmit }) => {
                           <div className="mb-5 flex items-center justify-between gap-2">
                             <a
                               href="#"
-                              className="inline-block text-sm font-medium text-[#779c63] hover:text-[#173e08] "
+                              className="inline-block text-sm font-medium  hover:text-[#008080] "
                             >
                               Forgot Password?
                             </a>
@@ -239,14 +239,14 @@ export const Form = ({ role, auth, onSubmit }) => {
                               onChange={handleChange}
                               ref={checkError}
                               accept="image/*"
-                              className="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 placeholder-gray-500 focus:border-blue-500 focus:ring focus:ring-blue-500/50 dark:border-gray-600 dark:bg-gray-800 dark:placeholder-gray-400 dark:focus:border-blue-500"
+                              className="block w-full rounded-lg border border-gray-200 px-5 py-3 leading-6 placeholder-gray-500  focus:ring   dark:placeholder-gray-400 "
                             />
                             {error && <p className="text-red-600"> {error} </p>}
                           </div>
                         ) : null}
                         <button
                           type="submit"
-                          className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-[#757070] bg-[#779c63] px-6 py-3 font-semibold leading-6 text-white hover:border-[[#779c63]] hover:bg-[#173e08] hover:text-white "
+                          className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-[#757070] bg-[#52b5b5] px-6 py-3 font-semibold leading-6 text-white hover:border-[[#779c63]] hover:bg-[#008080] hover:text-white "
                         >
                           <svg
                             className="hi-mini hi-arrow-uturn-right inline-block size-5 opacity-50"
@@ -265,46 +265,50 @@ export const Form = ({ role, auth, onSubmit }) => {
                             {auth === "login" ? "login" : "register"}{" "}
                           </span>
                         </button>
-                        {/* Divider: With Label */}
-                        <div className="my-5 flex items-center">
-                          <span
-                            aria-hidden="true"
-                            className="h-0.5 grow rounded bg-gray-100 dark:bg-gray-700/75"
-                          />
-                          <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-800 dark:bg-gray-700 dark:text-gray-200">
-                            or sign in with
-                          </span>
-                          <span
-                            aria-hidden="true"
-                            className="h-0.5 grow rounded bg-gray-100 dark:bg-gray-700/75"
-                          />
-                        </div>
-                        {/* END Divider: With Label */}
-                        <div className="grid grid-cols gap-2">
-                          <button
-                            type="button"
-                            className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold leading-5 text-gray-800 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300/25 active:border-gray-200 active:shadow-none dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:border-gray-600 dark:hover:text-gray-200 dark:focus:ring-gray-600/40 dark:active:border-gray-700"
-                          >
-                            <FcGoogle />
-                            <span>Google</span>
-                          </button>
-                        </div>
+                        {role === "bidder" ? (
+                          <>
+                            {/* Divider: With Label */}
+                            <div className="my-5 flex items-center">
+                              <span
+                                aria-hidden="true"
+                                className="h-0.5 grow rounded bg-gray-100 "
+                              />
+                              <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium   dark:text-gray-200">
+                                or sign in with
+                              </span>
+                              <span
+                                aria-hidden="true"
+                                className="h-0.5 grow rounded bg-gray-100 "
+                              />
+                            </div>
+                            {/* END Divider: With Label */}
+                            <div className="grid grid-cols gap-2">
+                              <button
+                                type="button"
+                                className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold leading-5 hover:border-gray-300  hover:shadow-sm  active:border-gray-200 active:shadow-none   dark:text-gray-300  dark:hover:text-gray-200 "
+                              >
+                                <FcGoogle />
+                                <span>Google</span>
+                              </button>
+                            </div>
+                          </>
+                        ) : null}
                       </div>
                     </form>
                   </div>
-                  <div className="grow bg-[#f4f8f1] p-5 text-center text-sm md:px-16 dark:bg-gray-700/50 ">
-                    Don’t have an account yet?
+                  <div className="grow bg-white p-4 text-center text-sm md:px-16  ">
+                    Don’t have an account yet? <span> </span>
                     {auth === "register" ? (
                       <Link
                         to={`/login?role=${role}`}
-                        className="font-medium text-[#779c63] hover:text-[#173e08] "
+                        className="font-medium text-[#ff8749] hover:text-[#008080] "
                       >
                         Sign in
                       </Link>
                     ) : (
                       <Link
                         to={`/register?role=${role}`}
-                        className="font-medium text-[#779c63] hover:text-[#173e08] "
+                        className="font-medium text-[#bffcfb] hover:text-[#008080] "
                       >
                         Sign UP
                       </Link>
@@ -316,10 +320,7 @@ export const Form = ({ role, auth, onSubmit }) => {
                 {/* Footer */}
                 <div className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
                   Powered by
-                  <a
-                    href="#"
-                    className="font-medium text-[#779c63] hover:text-[#173e08]"
-                  >
+                  <a href="#" className="font-medium  hover:text-[#008080]">
                     Thrift Heaven
                   </a>
                 </div>

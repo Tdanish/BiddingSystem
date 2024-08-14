@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import API from "../../http/axiosInstance";
+import { toast } from "react-toastify";
 
 export const SendOtp = () => {
   const navigate = useNavigate();
@@ -20,12 +21,15 @@ export const SendOtp = () => {
     try {
       const sendOtp = await API.post(`/sendotp/${email}/${role}`, data);
       if (sendOtp.status === 200) {
-        navigate(`/login?role=${role}`);
-      } else {
-        alert(sendOtp.data.message);
+        toast.success(sendOtp.data.message);
+        return navigate(`/login?role=${role}`);
       }
     } catch (error) {
-      alert(error.message);
+      if (error.response) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(error);
+      }
     }
   };
   return (
