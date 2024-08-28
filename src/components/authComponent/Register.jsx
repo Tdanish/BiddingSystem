@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Form } from "../form/Form";
 import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
 import API from "../../http/axiosInstance";
@@ -12,12 +12,10 @@ const Register = () => {
   const [searchParams] = useSearchParams();
   const role = searchParams.get("role");
   const dispatch = useDispatch();
-  let emailValue;
-  const { status, error, successMessage } = useSelector((store) => {
-    store.auth;
-  });
-  const onSubmit = async (data, email) => {
-    emailValue = email;
+  const { status, error, email, successMessage } = useSelector(
+    (store) => store.auth
+  );
+  const onSubmit = async (data) => {
     dispatch(postRegister(data, role));
   };
 
@@ -25,12 +23,13 @@ const Register = () => {
     if (status === STATUS.SUCCESS) {
       dispatch(setStatus(null));
       toast.success(successMessage);
-      navigate(`/sendOtp?email=${emailValue}&role=${role}`);
+
+      navigate(`/sendOtp?email=${email}&role=${role}`);
     } else if (status === STATUS.ERROR) {
       dispatch(setStatus(null));
       toast.error(error);
     }
-  }, []);
+  }, [status]);
 
   return (
     <>

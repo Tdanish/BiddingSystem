@@ -12,9 +12,9 @@ const Login = () => {
   const [searchParams] = useSearchParams();
   const role = searchParams.get("role");
   const dispatch = useDispatch();
-  const { status, token, error, successMessage } = useSelector((store) => {
-    store.auth;
-  });
+  const { status, token, error, successMessage } = useSelector(
+    (store) => store.auth
+  );
   console.log({ status });
 
   const onSubmit = (data) => {
@@ -47,7 +47,7 @@ const Login = () => {
       dispatch(setStatus(null));
       toast.error(error);
     }
-  }, []);
+  }, [status]);
   return (
     <>
       <Form onSubmit={onSubmit} auth={"login"} role={role} />

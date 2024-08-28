@@ -10,6 +10,7 @@ const authSlice = createSlice({
     role: null,
     token: null,
     error: null,
+    email: null,
     successMessage: null,
   },
   reducers: {
@@ -31,6 +32,9 @@ const authSlice = createSlice({
     setError(state, action) {
       state.error = action.payload;
     },
+    setEmail(state, action) {
+      state.email = action.payload;
+    },
   },
 });
 
@@ -41,6 +45,7 @@ export const {
   setToken,
   setSuccessMessage,
   setError,
+  setEmail,
 } = authSlice.actions;
 export default authSlice.reducer;
 export function postRegister(data, role) {
@@ -53,6 +58,7 @@ export function postRegister(data, role) {
         },
       });
       if (registerRequest.status === 200) {
+        dispatch(setEmail(registerRequest?.data?.email));
         dispatch(setStatus(STATUS.SUCCESS));
         dispatch(setRole(role));
         dispatch(setSuccessMessage(registerRequest?.data?.message));

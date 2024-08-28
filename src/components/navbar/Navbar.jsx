@@ -5,7 +5,7 @@ import TH from "./TH.png";
 
 const Navbar = () => {
   return (
-    <nav className="bg-[#52b5d5] p-4 shadow-xl">
+    <nav className="bg-[#52B5B5] p-4 shadow-xl">
       <div className="container mx-auto flex items-center justify-between">
         {/* Logo */}
         <div className="text-white text-lg font-bold">
@@ -19,10 +19,10 @@ const Navbar = () => {
           <Link to="/home" className="text-white hover:text-gray-200">
             Home
           </Link>
-          <Link to="/my-listing" className="text-white hover:text-gray-200">
+          <Link to="/listItem" className="text-white hover:text-gray-200">
             My Listing
           </Link>
-          <Link to="/add-item" className="text-white hover:text-gray-200">
+          <Link to="/addItem" className="text-white hover:text-gray-200">
             Add Item
           </Link>
           <Link

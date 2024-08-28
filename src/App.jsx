@@ -6,9 +6,11 @@ import Register from "./components/authComponent/Register";
 import { SendOtp } from "./components/authComponent/SendOtp";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Home } from "./components/pages/Home";
 import { Provider } from "react-redux";
 import store from "../store/store";
+import { Home } from "./components/pages/home/Home";
+import AddItem from "./components/pages/addItem/AddItem";
+import MyListing from "./components/pages/myListing/MyListing";
 
 function App() {
   return (
@@ -34,6 +36,8 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/sendOtp" element={<SendOtp />} />
             <Route path="/home" element={<Home />} />
+            <Route path="/addItem" element={<AddItem />} />
+            <Route path="/listItem" element={<MyListing />} />
           </Routes>
         </BrowserRouter>
       </Provider>
