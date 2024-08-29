@@ -10,6 +10,8 @@ import Form from "./Form";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import STATUS from "../../../../status/status";
+import Navbar from "../../navbar/Navbar";
+import { Footer } from "../../footer/Footer";
 
 const AddItem = () => {
   const { successMessage, errorMessage, status } = useSelector(
@@ -38,7 +40,9 @@ const AddItem = () => {
 
   return (
     <>
+      <Navbar />
       <Form onSubmit={onSubmit} />
+      <Footer />
     </>
   );
 };

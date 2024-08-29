@@ -53,31 +53,6 @@ export function handleItemPost(data) {
     }
   };
 }
-// export function renderItem() {
-//   return async function renderItemThunk(dispatch) {
-//     try {
-//       dispatch(setStatus(STATUS.LOADING));
-//       const response = await API.get("/item", {
-//         headers: {
-//           Authorization: `Bearer ${localStorage.getItem("jsonWebToken")}`,
-//         },
-//       });
-//       console.log(response.status, response.data);
-//       if (response?.status === 200 && response?.data) {
-//         dispatch(setItemData(response?.data?.data));
-//         dispatch(setStatus(STATUS.SUCCESS));
-//         dispatch(setSuccessMessage(response?.data?.message));
-//         console.log(response.data.data + "tambeeee");
-//       } else {
-//         dispatch(setErrorMessage(response?.data?.message));
-//         dispatch(setStatus(STATUS.ERROR));
-//       }
-//     } catch (error) {
-//       dispatch(setErrorMessage(error?.response?.data?.message));
-//       dispatch(setStatus(STATUS.ERROR));
-//     }
-//   };
-// }
 export function renderItem() {
   return async function renderItemThunk(dispatch) {
     try {
@@ -87,33 +62,59 @@ export function renderItem() {
           Authorization: `Bearer ${localStorage.getItem("jsonWebToken")}`,
         },
       });
-      console.log(typeof response.data);
-      console.log(JSON.parse(response.data));
-
-      // Check if response.data is actually an object as expected
-      if (
-        response?.status === 200 &&
-        typeof response?.data === "object" &&
-        response?.data?.data
-      ) {
-        dispatch(setItemData(response.data.data));
+      console.log(response.status, response.data);
+      if (response?.status === 200 && response?.data) {
+        dispatch(setItemData(response?.data?.data));
         dispatch(setStatus(STATUS.SUCCESS));
-        dispatch(setSuccessMessage(response.data.message));
+        dispatch(setSuccessMessage(response?.data?.message));
         console.log(response.data.data + "tambeeee");
       } else {
-        // Handle cases where response is not as expected
-        dispatch(
-          setErrorMessage(
-            response?.data?.message || "Unexpected response format"
-          )
-        );
+        dispatch(setErrorMessage(response?.data?.message));
         dispatch(setStatus(STATUS.ERROR));
       }
     } catch (error) {
-      dispatch(
-        setErrorMessage(error?.response?.data?.message || "Network Error")
-      );
+      dispatch(setErrorMessage(error?.response?.data?.message));
       dispatch(setStatus(STATUS.ERROR));
     }
   };
 }
+
+// export function renderItem() {
+//   return async function renderItemThunk(dispatch) {
+//     try {
+//       dispatch(setStatus(STATUS.LOADING));
+//       const response = await API.get("/item", {
+//         headers: {
+//           Authorization: `Bearer ${localStorage.getItem("jsonWebToken")}`,
+//         },
+//       });
+//       console.log(typeof response.data);
+//       console.log(JSON.parse(response.data));
+
+//       // Check if response.data is actually an object as expected
+//       if (
+//         response?.status === 200 &&
+//         typeof response?.data === "object" &&
+//         response?.data?.data
+//       ) {
+//         dispatch(setItemData(response.data.data));
+//         dispatch(setStatus(STATUS.SUCCESS));
+//         dispatch(setSuccessMessage(response.data.message));
+//         console.log(response.data.data + "tambeeee");
+//       } else {
+//         // Handle cases where response is not as expected
+//         dispatch(
+//           setErrorMessage(
+//             response?.data?.message || "Unexpected response format"
+//           )
+//         );
+//         dispatch(setStatus(STATUS.ERROR));
+//       }
+//     } catch (error) {
+//       dispatch(
+//         setErrorMessage(error?.response?.data?.message || "Network Error")
+//       );
+//       dispatch(setStatus(STATUS.ERROR));
+//     }
+//   };
+// }

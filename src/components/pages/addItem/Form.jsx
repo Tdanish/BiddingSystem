@@ -38,6 +38,7 @@ const AddItem = ({ onSubmit }) => {
     for (let i = 0; i < image.length; i++) {
       formdata.append("itemImages", image[i]);
     }
+
     const currentTime = new Date();
     const getCurrentHour = currentTime.getHours();
     if (getCurrentHour >= 9 && getCurrentHour <= 21) {
@@ -47,11 +48,11 @@ const AddItem = ({ onSubmit }) => {
     }
     onSubmit(formdata);
 
-    // Handle form submission here
+    setSubmitted(true); // Update to show submission state
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center py-3 min-h-screen bg-gray-100">
       <Transition
         show={!submitted}
         enter="transition-opacity duration-700"
@@ -63,35 +64,31 @@ const AddItem = ({ onSubmit }) => {
       >
         <form
           onSubmit={handleSubmit}
-          className="w-full max-w-2xl p-8 mx-4 bg-white rounded-lg shadow-lg md:p-12 space-y-6"
+          className="w-full max-w-2xl p-8 mx-4 bg-[#d2f5f9] rounded-lg shadow-lg md:p-12 space-y-6"
         >
-          <h2 className="text-2xl font-bold text-gray-900">Post Your Item</h2>
+          <h2 className="text-2xl font-bold text-[#008080] text-center">
+            Start Listing Item
+          </h2>
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Item Name
-              </label>
               <input
                 type="text"
                 name="itemName"
                 value={formData.itemName}
                 onChange={handleChange}
-                className="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                placeholder="Enter item name"
+                className="w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder-shown:p-2"
+                placeholder="Item Name"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Category
-              </label>
               <select
                 name="category"
                 value={formData.category}
                 onChange={handleChange}
-                className="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder-shown:p-2"
                 required
               >
                 <option value="vehicle">Vehicle</option>
@@ -103,46 +100,38 @@ const AddItem = ({ onSubmit }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Description
-            </label>
             <textarea
               name="description"
               value={formData.description}
               onChange={handleChange}
-              className="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder-shown:p-2"
               rows="4"
-              placeholder="Enter item description"
+              placeholder="Description Here"
               required
             />
           </div>
 
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Starting Price
-              </label>
               <input
                 type="number"
                 name="startingPrice"
                 value={formData.startingPrice}
                 onChange={handleChange}
-                className="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                placeholder="Enter starting price"
+                className="w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder-shown:p-2"
+                placeholder="Best price"
                 required
+                style={{ MozAppearance: "textfield" }} // Firefox specific styling
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700">
-                Location
-              </label>
               <input
                 type="text"
                 name="location"
                 value={formData.location}
                 onChange={handleChange}
-                className="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder-shown:p-2"
                 placeholder="Enter location"
                 required
               />
@@ -150,7 +139,7 @@ const AddItem = ({ onSubmit }) => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-xl font-medium text-[#008080]">
               Delivery
             </label>
             <div className="flex items-center mt-2 space-x-4">
@@ -161,7 +150,7 @@ const AddItem = ({ onSubmit }) => {
                   value="available"
                   checked={formData.delivery === "available"}
                   onChange={handleChange}
-                  className="text-indigo-600 border-gray-300 focus:ring-indigo-500"
+                  className="border-gray-300 text-[#ff8749]" // Change color to match submit button
                   required
                 />
                 <span className="ml-2">Available</span>
@@ -173,7 +162,7 @@ const AddItem = ({ onSubmit }) => {
                   value="not-available"
                   checked={formData.delivery === "not-available"}
                   onChange={handleChange}
-                  className="text-indigo-600 border-gray-300 focus:ring-indigo-500"
+                  className="border-gray-300 text-[#ff8749]" // Change color to match submit button
                   required
                 />
                 <span className="ml-2">Not Available</span>
@@ -183,7 +172,7 @@ const AddItem = ({ onSubmit }) => {
 
           {formData.delivery === "available" && (
             <div>
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-xl font-medium text-[#008080]">
                 Delivery Radius (in km)
               </label>
               <input
@@ -191,14 +180,15 @@ const AddItem = ({ onSubmit }) => {
                 name="deliveryRadius"
                 value={formData.deliveryRadius}
                 onChange={handleChange}
-                className="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                className="w-full mt-1 border-gray-300 rounded-md shadow-sm  placeholder-shown:p-2"
                 placeholder="Enter delivery radius"
+                style={{ MozAppearance: "textfield" }} // Firefox specific styling
               />
             </div>
           )}
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-xl font-medium text-[#008080]">
               Phone Number
             </label>
             <input
@@ -206,29 +196,29 @@ const AddItem = ({ onSubmit }) => {
               name="phoneNumber"
               value={formData.phoneNumber}
               onChange={handleChange}
-              className="w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full mt-1 border-gray-300 rounded-md shadow-sm placeholder-shown:p-2"
               placeholder="Enter phone number"
               required
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
-              Item Images
+            <label className="block text-xl font-medium text-[#008080]">
+              Upload Product Photo
             </label>
             <input
               type="file"
               name="itemImages"
               onChange={handleFileChange}
               multiple
-              className="block w-full mt-1 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
+              className="block w-full mt-1 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-white file:text-gray-500"
             />
           </div>
 
-          <div className="text-right">
+          <div className="text-center">
             <button
               type="submit"
-              className="px-6 py-3 text-sm font-medium text-white bg-indigo-600 rounded-md shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="px-6 py-3 text-sm font-medium text-white bg-[#ff8749] border border-white rounded-md hover:bg-[#f6651a]"
             >
               Submit
             </button>
