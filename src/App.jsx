@@ -11,6 +11,7 @@ import store from "../store/store";
 import { Home } from "./components/pages/home/Home";
 import AddItem from "./components/pages/addItem/AddItem";
 import MyListing from "./components/pages/myListing/MyListing";
+import SinglePage from "./components/pages/myListing/SinglePage";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/addItem" element={<AddItem />} />
             <Route path="/listItem" element={<MyListing />} />
+            <Route path="/singleitem" element={<SinglePage />} />
           </Routes>
         </BrowserRouter>
       </Provider>
